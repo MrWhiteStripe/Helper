@@ -28,13 +28,16 @@ stream = p.open(format=sample_f, channels=channels, rate = rate, frames_per_buff
 
 frames =[]
 
+file = open('text.txt', 'w')
+
 for i in range(0, int(rate / chunk * timesec)):
     data = stream.read(chunk)
     frames.append(data)
 
     if recognizer.AcceptWaveform(data):
         print(recognizer.Result())
-
+        file.write(recognizer.Result() + '\n')
+file.close()
 stream.stop_stream()
 p.terminate()
 
